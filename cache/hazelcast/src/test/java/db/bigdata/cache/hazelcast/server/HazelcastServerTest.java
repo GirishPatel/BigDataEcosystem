@@ -49,9 +49,11 @@ public class HazelcastServerTest {
         IMap<String, String> testMap = hazelcastServer.getInstance().getMap("testMap");
         assertNotNull(testMap);
         assertEquals(0, testMap.size());
+
         testMap.put("key1", "value1");
         testMap.put("key2", "value2");
         assertEquals(2, testMap.size());
+
         assertEquals("value1", testMap.get("key1"));
 
         testMap.remove("key1");
