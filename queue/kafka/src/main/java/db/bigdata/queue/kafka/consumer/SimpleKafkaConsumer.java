@@ -82,11 +82,11 @@ public class SimpleKafkaConsumer<K, V> {
             properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
             return this;
         }
-        public SimpleKafkaConsumerBuilder setKeySerializer(String serializer) {
+        public SimpleKafkaConsumerBuilder setKeyDeserializer(String serializer) {
             this.properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, serializer);
             return this;
         }
-        public SimpleKafkaConsumerBuilder setValueSerializer(String serializer) {
+        public SimpleKafkaConsumerBuilder setValueDeserializer(String serializer) {
             this.properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, serializer);
             return this;
         }

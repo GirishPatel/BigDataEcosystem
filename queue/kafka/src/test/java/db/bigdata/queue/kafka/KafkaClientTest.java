@@ -7,10 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -101,6 +99,40 @@ public class KafkaClientTest {
         for(String value : values) {
             assertEquals("hello", value);
         }
+    }
+
+    @Test
+    public void testCustomSerializationAndDeserialization() throws InterruptedException {
+        simpleKafkaConsumer = new SimpleKafkaConsumer.SimpleKafkaConsumerBuilder<String, Person>(GROUP_ID, multipleTopicList)
+                .setValueDeserializer(Person.PersonDeserializer.class.getName())
+                .build();
+        simpleKafkaProducer = new SimpleKafkaProducer.SimpleKafkaProducerBuilder<String, Person>()
+                .setValueSerializer(Person.PersonSerializer.class.getName())
+                .build();
+
+        // consume the queue if the there is some data to consume
+        while(simpleKafkaConsumer.getNext(1000).size() != 0);
+
+        simpleKafkaProducer.publishData(TOPIC_ID1, null, new Person("pankaj", 21));
+        simpleKafkaProducer.publishData(TOPIC_ID1, "key",  new Person("pankaj", 21));
+        simpleKafkaProducer.publishData(TOPIC_ID2, null,  new Person("pankaj", 21));
+        simpleKafkaProducer.publishData(TOPIC_ID2, "key",  new Person("pankaj", 21));
+
+        Thread.sleep(100);
+
+        List<Person> personList = new ArrayList<>();
+
+        while(true){
+            List<Person> valueList = simpleKafkaConsumer.getNext(100);
+            personList.addAll(valueList);
+            if(valueList.size() == 0) break;
+        }
+
+        assertEquals(4, personList.size());
+        for(Person person : personList) {
+            assertEquals("pankaj", person.getName());
+        }
+
     }
 
 }
