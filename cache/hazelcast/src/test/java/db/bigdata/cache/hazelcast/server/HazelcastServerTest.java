@@ -40,7 +40,7 @@ public class HazelcastServerTest {
         assertNotNull(hazelcastServer.getInstance());
         System.out.println(hazelcastServer.getConfig().getInstanceName());
         System.out.println(getHazelcastConfig().getInstanceName());
-        //assertEquals(hazelcastServer.getConfig().getInstanceName(), getHazelcastConfig().getInstanceName());
+        assertEquals(hazelcastServer.getConfig().getInstanceName(), getHazelcastConfig().getInstanceName());
     }
 
     @Test
