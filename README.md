@@ -47,7 +47,7 @@ Purpose of this project to learn and develop quality DB clients for various use 
     2. Helix
 3. Computing
     1. Flink
-    2. Samaza
+    2. Samza
 4. Data Ingestor
     1. Flume
     2. Scoop
@@ -55,5 +55,5 @@ Purpose of this project to learn and develop quality DB clients for various use 
     1. PostgreSQL
     2. TokuDB
 6. GraphDB
-    2. Neo4j
+    1. Neo4j
     
