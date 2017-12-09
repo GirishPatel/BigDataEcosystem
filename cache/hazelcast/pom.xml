@@ -8,4 +8,17 @@
     <artifactId>hazelcast</artifactId>
     <version>0.0.1</version>
 
+    <parent>
+        <groupId>db.bigdata</groupId>
+        <artifactId>bigdata-ecosystem</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+    </dependencies>
 </project>
