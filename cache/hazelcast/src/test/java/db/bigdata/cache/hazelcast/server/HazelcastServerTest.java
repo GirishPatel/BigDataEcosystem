@@ -44,45 +44,21 @@ public class HazelcastServerTest {
     }
 
     @Test
-    public void testGetMapHazelcastServer() {
+    public void testHazelcastMap() {
         hazelcastServer = new HazelcastServer();
-        Map<String, String> map = hazelcastServer.getInstance().getMap("test");
-        assertNotNull(map);
-        assertEquals(0, map.size());
-    }
+        IMap<String, String> testMap = hazelcastServer.getInstance().getMap("testMap");
+        assertNotNull(testMap);
+        assertEquals(0, testMap.size());
+        testMap.put("key1", "value1");
+        testMap.put("key2", "value2");
+        assertEquals(2, testMap.size());
+        assertEquals("value1", testMap.get("key1"));
 
-    @Test
-    public void testPutHazelcastMap() {
-        hazelcastServer = new HazelcastServer();
-        Map<String, String> map = hazelcastServer.getInstance().getMap("test");
-        assertNotNull(map);
-        map.put("test1", "test1");
-        assertEquals(1, map.size());
-        assertEquals("test1", map.get("test1"));
-    }
+        testMap.remove("key1");
+        assertEquals(1, testMap.size());
 
-    @Test
-    public void testRemoveKey() {
-        hazelcastServer = new HazelcastServer();
-        IMap<String, String> map = hazelcastServer.getInstance().getMap("test");
-        assertNotNull(map);
-        map.put("test1", "test1");
-        assertEquals(1, map.size());
-        assertEquals("test1", map.get("test1"));
-        map.remove("test1");
-        assertEquals(0, map.size());
-    }
-
-    @Test
-    public void testDeleteKey() {
-        hazelcastServer = new HazelcastServer();
-        IMap<String, String> map = hazelcastServer.getInstance().getMap("test");
-        assertNotNull(map);
-        map.put("test1", "test1");
-        assertEquals(1, map.size());
-        assertEquals("test1", map.get("test1"));
-        map.delete("test1");
-        assertEquals(0, map.size());
+        testMap.delete("key2");
+        assertEquals(0, testMap.size());
     }
 
     private Config getHazelcastConfig() {
