@@ -9,14 +9,12 @@ import java.util.Properties;
 @Getter
 @Slf4j
 public class SimpleKafkaProducer<K,V> {
-    private String topicId;
     private Producer producer;
 
-    private SimpleKafkaProducer(Properties properties, String topicId) {
-        this.topicId = topicId;
+    private SimpleKafkaProducer(Properties properties) {
         this.producer = new KafkaProducer<K, V>(properties);
     }
-    public void publishData(K key, V  data) {
+    public void publishData(String topicId, K key, V  data) {
         RecordPublishCallback localCallback = new RecordPublishCallback();
         ProducerRecord<K, V> producerRecord = new ProducerRecord<>(topicId, key, data);
         producer.send(producerRecord, localCallback);
@@ -39,11 +37,9 @@ public class SimpleKafkaProducer<K,V> {
 
 
     public static class SimpleKafkaProducerBuilder<K,V>{
-        private String topicId;
         private Properties properties;
 
-        public SimpleKafkaProducerBuilder(String topicId) {
-            this.topicId = topicId;
+        public SimpleKafkaProducerBuilder() {
             this.properties = getDefaultProducerProperty();
         }
 
@@ -70,7 +66,7 @@ public class SimpleKafkaProducer<K,V> {
             return this;
         }
         public SimpleKafkaProducer build() {
-            return new SimpleKafkaProducer(properties, topicId);
+            return new SimpleKafkaProducer(properties);
         }
 
 
@@ -78,17 +74,6 @@ public class SimpleKafkaProducer<K,V> {
         private Properties getDefaultProducerProperty() {
             Properties properties = new Properties();
             properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-
-//            //configure the following three settings for SSL Encryption
-//            properties.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SSL");
-//            properties.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, "/var/private/ssl/kafka.client.truststore.jks");
-//            properties.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG,  "test1234");
-//
-//            // configure the following three settings for SSL Authentication
-//            properties.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, "/var/private/ssl/kafka.client.keystore.jks");
-//            properties.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, "test1234");
-//            properties.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, "test1234");
-
             properties.put(ProducerConfig.ACKS_CONFIG, "all");
             properties.put(ProducerConfig.RETRIES_CONFIG, 0);
             properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");

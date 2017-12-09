@@ -1,6 +1,5 @@
-package db.bigdata.queue.kafka.consumertest;
+package db.bigdata.queue.kafka.consumer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.*;
@@ -14,7 +13,7 @@ import java.util.Properties;
 @Getter
 @Slf4j
 public class SimpleKafkaConsumer<K, V> {
-    private static final long defaultTimeOut = 10;
+    private static final long defaultTimeOutMS = 10;
     private String groupId;
     private List<String> topics;
     private Consumer<K, V> consumer;
@@ -35,7 +34,7 @@ public class SimpleKafkaConsumer<K, V> {
         return recordValueList;
     }
     public List<V> getNext() {
-        return getNext(defaultTimeOut);
+        return getNext(defaultTimeOutMS);
     }
 
     public void close() {
