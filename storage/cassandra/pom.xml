@@ -8,5 +8,10 @@
     <artifactId>cassandra</artifactId>
     <version>0.0.1</version>
 
+    <parent>
+        <groupId>db.bigdata</groupId>
+        <artifactId>bigdata-ecosystem</artifactId>
+        <version>0.0.1</version>
+    </parent>
 
 </project>
