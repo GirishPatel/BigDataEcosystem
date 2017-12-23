@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
@@ -61,6 +62,19 @@ public class HazelcastServerTest {
 
         testMap.delete("key2");
         assertEquals(0, testMap.size());
+    }
+
+    @Test
+    public void testValueTTLLogic() throws InterruptedException {
+        hazelcastServer = new HazelcastServer();
+        IMap<String, String> testMap = hazelcastServer.getInstance().getMap("testMap");
+        assertNotNull(testMap);
+        assertEquals(0, testMap.size());
+        testMap.put("key1", "value1", 1000, TimeUnit.MILLISECONDS);
+        testMap.put("key2", "value2");
+        assertEquals(2, testMap.size());
+        Thread.sleep(3000);
+        assertEquals(1, testMap.size());
     }
 
     private Config getHazelcastConfig() {
