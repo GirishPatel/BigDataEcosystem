@@ -20,12 +20,10 @@ public class SparkClientTest {
 
     @Before
     public void before() {
-
     }
 
     @After
     public void after() {
-
     }
 
     @Test
