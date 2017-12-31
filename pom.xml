@@ -32,6 +32,7 @@
         <module>computing/spark</module>
         <module>monitoring/cosmos</module>
         <module>monitoring/hystrix</module>
+        <module>webserver/jetty</module>
     </modules>
 
     <dependencies>

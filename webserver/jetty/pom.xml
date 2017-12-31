@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>db.bigdata.webserver</groupId>
+    <artifactId>jetty</artifactId>
+    <version>0.0.1</version>
+
+    <parent>
+        <groupId>db.bigdata</groupId>
+        <artifactId>bigdata-ecosystem</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <properties>
+        <jetty.version>9.4.7.v20170914</jetty.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>db.bigdata.cache</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>2.9.0</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
